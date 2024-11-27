@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model user {
+  id Int @id @default(autoincrement())
+  name String
+  surname String
+  email String @unique
+  password String
+  address String
+  phone Int
+  transactions transaction[]
+  cards card[]
+  cart clothes[]
+  createdAt DateTime @default(now())
+  role String @default("user")
+}
+
+model clothes {
+  id Int @id @default(autoincrement())
+  name String
+  price Float
+  description String
+  image String
+  stock Int
+  size String
+  typeId Int
+  subTypeId Int
+  fabric String
+  type type @relation(fields: [typeId], references: [id])
+  subType subType @relation(fields: [subTypeId], references: [id])
+
+  transaction transaction[]
+
+  clothesTransaction clothesTransaction[]
+
+  user user[]
+}
+
+model type {
+  id Int @id @default(autoincrement())
+  name String
+  clothes clothes[]
+
+  subType subType[]
+}
+
+model subType {
+  id Int @id @default(autoincrement())
+  name String
+  typeId Int
+  type type @relation(fields: [typeId], references: [id])
+
+  clothes clothes[]
+}
+
+model transaction {
+  id Int @id @default(autoincrement())
+  userId Int
+  user user @relation(fields: [userId], references: [id])
+  clothesId Int
+  clothes clothes @relation(fields: [clothesId], references: [id])
+  quantity Int
+  total Float
+  createdAt DateTime @default(now())
+
+  clothesTransaction clothesTransaction[]
+}
+
+model card {
+  id Int @id @default(autoincrement())
+  userId Int
+  user user @relation(fields: [userId], references: [id])
+  cardNumber String
+  expirationDate String
+  cvv Int
+  createdAt DateTime @default(now())
+}
+
+model clothesTransaction {
+  id Int @id @default(autoincrement())
+  clothesId Int
+  clothes clothes @relation(fields: [clothesId], references: [id])
+  transactionId Int
+  transaction transaction @relation(fields: [transactionId], references: [id])
+  quantity Int
+}

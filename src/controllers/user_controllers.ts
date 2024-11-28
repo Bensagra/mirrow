@@ -1,5 +1,7 @@
 import { jwtControllers } from "../utilities/export_routes";
 import prisma from "../client";
+import * as validator from 'email-validator';
+
 
 const login = async (req: any, res: any) => {
     const { email, password } = req.body;
@@ -23,7 +25,10 @@ const login = async (req: any, res: any) => {
 
 const register = async (req: any, res: any) => {
     const { email, password, address, name, phone, role, surname } = req.body;
-
+    if (!validator.validate(email)) {
+        return res.status(400).json({ message: "Email inválido" });
+        
+    }
     try {
         const existingUser = await prisma.user.findUnique({
             where: { email },

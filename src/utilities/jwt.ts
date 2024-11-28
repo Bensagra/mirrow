@@ -14,8 +14,8 @@ export const decodeToken = (payload: string) => {
 export const encryptPassword = (password: String) => {
   return jwt.sign(password, process.env.USER_KEY as string)};
 
-export const decryptPassword = (token: string) => {
-    return jwt.verify(token, process.env.USER_KEY as string)};
+export const decryptPassword = (password: string) => {
+    return jwt.verify(password, process.env.USER_KEY as string)};
 
 
     export const jwtControllers = {

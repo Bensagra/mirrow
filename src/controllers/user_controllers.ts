@@ -3,11 +3,12 @@ import prisma from "../client";
 
 const login = (req: any, res: any) => {
     const { email, password } = req.body;
-    const encryptedPassword = jwtControllers.encryptPassword(password);
+    const encryptedPassword = jwtControllers.decryptPassword(password);
+    console.log(encryptedPassword);
     prisma.user.findUnique({
         where: {
             email: email,
-            password: encryptedPassword
+            password: encryptedPassword as string
         }
     }).then((user) => {
         if (user) {
@@ -23,7 +24,7 @@ const login = (req: any, res: any) => {
 const register = (req: any, res: any) => {
     const { email, password, address, name, phone, role, surename } = req.body;
     const encryptedPassword = jwtControllers.encryptPassword(password);
-    console.log(req.body);
+    console.log(encryptedPassword);
     prisma.user.create({
         data: {
             email: email as string,
@@ -32,13 +33,13 @@ const register = (req: any, res: any) => {
             name: name as string,
             phone: phone as number,
             role: role as string,
-            surname: surename as string,
+            surename: surename as string,
             
         }
     }).then((user) => {
         res.status(201).json({ message: "Usuario registrado" });
     }).catch((error) => {
-        res.status(500).json({ message: "Error en el servidor" });
+        res.status(500).json({error});
     });
 }
 

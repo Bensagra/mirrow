@@ -22,8 +22,8 @@ const login = (req: any, res: any) => {
 }
 
 const register = (req: any, res: any) => {
-    const { email, password, address, name, phone, role, surename } = req.body;
-    const encryptedPassword = jwtControllers.encryptPassword(password);
+    const { email, password, address, name, phone, role, surname } = req.body;
+    let encryptedPassword = jwtControllers.encryptPassword(password);
     console.log(encryptedPassword);
     prisma.user.create({
         data: {
@@ -33,8 +33,7 @@ const register = (req: any, res: any) => {
             name: name as string,
             phone: phone as number,
             role: role as string,
-            surename: surename as string,
-            
+            surname: surname as string,
         }
     }).then((user) => {
         res.status(201).json({ message: "Usuario registrado" });

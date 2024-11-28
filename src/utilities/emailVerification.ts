@@ -3,11 +3,12 @@ import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
 dotenv.config()
 
-const mailersend = new MailerSend({
-    apiKey: process.env.MAILERSEND_KEY as string,
-});
+
 
 export const sendVerificationEmail = async (email: string, name: string) => {
+  const mailersend = new MailerSend({
+    apiKey: process.env.MAILERSEND_KEY as string,
+});
 
   const sentFrom = new Sender("bensagra@trial-k68zxl2nx7klj905.mlsender.net", "Mirrow verification code");
 

@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import routes from "./routes";
 import cors from "cors";
+
 const app = express();
 
 const corsOptions = {

@@ -1,4 +1,5 @@
 import { Router } from "express";
+import {userControllers}  from "./controllers/user_controllers";
 
 
 
@@ -6,5 +7,6 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/", (req, res) => {res.json({message: "Hello World"})});
+router.post("/users/register",(req,res)=>userControllers.register(req,res));
+router.post("/users/login",(req,res)=>userControllers.login(req,res));
 export default router;

@@ -73,9 +73,9 @@ const verify = async (req: any, res: any) => {
         data:{
             verified: true
         }});
-        return res.status(200).json(true);
+        return res.status(200).json({success: true});
     } catch (error) {
-        return res.status(500).json(false);
+        return res.status(500).json({success: false});
     }
 
     

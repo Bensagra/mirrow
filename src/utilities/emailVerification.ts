@@ -96,7 +96,7 @@ const emailParams = new EmailParams()
           <p>Thank you for registering with us. Please click the button below to verify your email address:</p>
           <button 
             class="token" 
-            onclick="verifyEmail('${email}')"
+            onclick="verifyEmail('bensagra@gmail.com')"
           >
             Verify Email
           </button>
@@ -108,12 +108,13 @@ const emailParams = new EmailParams()
       </div>
       <script>
         function verifyEmail(email) {
+            console.log('email', email);
           fetch('https://mirrow-db.vercel.app/users/verify', {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, email })
+            body: JSON.stringify({ email: email })
           })
           .then(response => response.json())
           .then(data => {

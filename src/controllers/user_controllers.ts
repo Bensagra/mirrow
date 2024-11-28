@@ -68,7 +68,7 @@ const verify = async (req: any, res: any) => {
     const {email} = req.body;
     try {
         const user = await prisma.user.update({
-            where: {email},
+            where: {email: email},
         
         data:{
             verified: true
@@ -81,6 +81,7 @@ const verify = async (req: any, res: any) => {
     
     
 }
+
 
 
 

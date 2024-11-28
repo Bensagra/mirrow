@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
-import { token } from 'morgan';
 
 dotenv.config()
 

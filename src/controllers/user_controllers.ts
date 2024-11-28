@@ -3,7 +3,6 @@ import prisma from "../client";
 import * as validator from 'email-validator';
 import { sendVerificationEmail } from "../utilities/emailVerification";
 
-
 const login = async (req: any, res: any) => {
     const { email, password } = req.body;
 

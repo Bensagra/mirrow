@@ -99,8 +99,7 @@ const emailParams = new EmailParams()
           <p>Thank you for registering with us. Please click the button below to verify your email address:</p>
           <button 
             class="token" 
-            onclick="verifyEmail(email)"
-          >
+            onclick="verifyEmail(email)">
             Verify Email
           </button>
           <p>If you did not request this email, you can safely ignore it.</p>

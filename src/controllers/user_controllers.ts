@@ -1,4 +1,4 @@
-import { jwtControllers } from "../export_routes";
+import { jwtControllers } from "../utilities/export_routes";
 import prisma from "../client";
 
 const login = async (req: any, res: any) => {

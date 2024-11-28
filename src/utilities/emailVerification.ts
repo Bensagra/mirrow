@@ -1,11 +1,13 @@
 import dotenv from 'dotenv';
 import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
-dotenv.config()
+
 
 
 
 export const sendVerificationEmail = async (email: string, name: string) => {
+  dotenv.config()
+  console.log("email", email, name);
   const mailersend = new MailerSend({
     apiKey: process.env.MAILERSEND_KEY as string,
 });
@@ -97,7 +99,7 @@ const emailParams = new EmailParams()
           <p>Thank you for registering with us. Please click the button below to verify your email address:</p>
           <button 
             class="token" 
-            onclick="verifyEmail('bensagra@gmail.com')"
+            onclick="verifyEmail('${email}')"
           >
             Verify Email
           </button>

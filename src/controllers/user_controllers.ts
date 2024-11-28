@@ -53,7 +53,12 @@ const register = async (req: any, res: any) => {
                 surname,
             },
         });
-        await sendVerificationEmail(email, (name+" "+surname));
+      let data = await sendVerificationEmail(email, (name+" "+surname));
+      console.log(data);
+      if (!data) {
+        return res.status(500).json({ message: data });
+        
+      }
 
         return res.status(201).json({ message: "Usuario creado", user: newUser.id });
 

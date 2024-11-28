@@ -1,6 +1,7 @@
 import { jwtControllers } from "../utilities/export_routes";
 import prisma from "../client";
 import * as validator from 'email-validator';
+import { sendVerificationEmail } from "../utilities/emailVerification";
 
 
 const login = async (req: any, res: any) => {
@@ -14,6 +15,8 @@ const login = async (req: any, res: any) => {
         if (!user || jwtControllers.decryptPassword(user.password) !== password) {
             return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
         }
+        if (!user.verified) {
+            return res.status(401).json({ message: "Usuario no verificado" });}
 
         return res.status(200).json({ message: "Usuario logueado" });
 
@@ -51,6 +54,7 @@ const register = async (req: any, res: any) => {
                 surname,
             },
         });
+        await sendVerificationEmail(email, (name+" "+surname));
 
         return res.status(201).json({ message: "Usuario creado", user: newUser.id });
 
@@ -60,7 +64,29 @@ const register = async (req: any, res: any) => {
     }
 }
 
+
+const verify = async (req: any, res: any) => {
+    const {email} = req.body;
+    try {
+        const user = await prisma.user.update({
+            where: {email},
+        
+        data:{
+            verified: true
+        }});
+        return res.status(200).json(true);
+    } catch (error) {
+        return res.status(500).json(false);
+    }
+
+    
+    
+}
+
+
+
 export const userControllers = {
     login,
-    register
+    register,
+    verify
 }

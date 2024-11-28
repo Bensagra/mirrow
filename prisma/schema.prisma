@@ -22,6 +22,7 @@ model user {
   cards        card[]
   transactions transaction[]
   cart         clothes[]     @relation("clothesTouser")
+  verified Boolean @default(false)
 }
 
 model clothes {

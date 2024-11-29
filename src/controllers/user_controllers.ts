@@ -73,6 +73,7 @@ const register = async (req: any, res: any) => {
 
 const verify = async (req: any, res: any) => {
     const {uuid} = req.body;
+    
     try {
         const user = await prisma.user.update({
             where: {verificationToken: uuid},

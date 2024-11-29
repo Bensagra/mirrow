@@ -80,20 +80,19 @@
   </div>
   <script>
     let params = new URLSearchParams(location.search);
-    let email = params.get('email');
-    let name = params.get('name');
-    document.getElementById('name').textContent = name;
+    let uuid = params.get('uuid');
+   
+
     // Simulate an email variable for the example
 
     // Add event listener to the button
     document.getElementById('verify-button').addEventListener('click', function () {
-      console.log('email', email);
       fetch('https://mirrow-db.vercel.app/users/verify', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: email })
+        body: JSON.stringify({ uuid: uuid })
       })
       .then(response => response.json())
       .then(data => {

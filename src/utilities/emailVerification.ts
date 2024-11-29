@@ -5,7 +5,7 @@ import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
 
 
-export const sendVerificationEmail = async (email: string, name: string) => {
+export const sendVerificationEmail = async (email: string, name: string, uuid: string) => {
   dotenv.config()
   console.log("email", email, name);
   const mailersend = new MailerSend({
@@ -98,7 +98,7 @@ const emailParams = new EmailParams()
           <p>Hello <strong>${name}</strong>,</p>
           <p>Thank you for registering with us. Please click the button below to verify your email address:</p>
         
-         <a href="../verifyEmail.html?email=${email}&name=${name}"> </a>
+         <a href="../verifyEmail.html?uuid=${uuid}"> </a>
           <p>If you did not request this email, you can safely ignore it.</p>
         </div>
         <div class="email-footer">

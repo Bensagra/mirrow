@@ -53,7 +53,7 @@ const register = async (req: any, res: any) => {
                 surname,
             },
         });
-      let data = await sendVerificationEmail(email, (name+" "+surname));
+      let data = await sendVerificationEmail(email, (name+" "+surname), newUser.verificationToken);
       console.log(data);
       if (!data) {
         return res.status(500).json({ message: data });
@@ -70,10 +70,10 @@ const register = async (req: any, res: any) => {
 
 
 const verify = async (req: any, res: any) => {
-    const {email} = req.body;
+    const {uuid} = req.body;
     try {
         const user = await prisma.user.update({
-            where: {email: email},
+            where: {verificationToken: uuid},
         
         data:{
             verified: true

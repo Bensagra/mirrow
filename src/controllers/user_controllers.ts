@@ -154,5 +154,7 @@ const resetPassword = async (req: any, res: any) => {
 export const userControllers = {
     login,
     register,
-    verify
+    verify,
+    requestPasswordReset,
+    resetPassword,
 }

@@ -98,7 +98,7 @@ const emailParams = new EmailParams()
           <p>Hello <strong>${name}</strong>,</p>
           <p>Thank you for registering with us. Please click the button below to verify your email address:</p>
         
-         <a href="../verifyEmail.html?uuid=${uuid}">Click here to verify email </a>
+         <a href="https://pruebas-lac.vercel.app/verifyEmail.html?uuid=${uuid}">Click here to verify email </a>
           <p>If you did not request this email, you can safely ignore it.</p>
         </div>
         <div class="email-footer">

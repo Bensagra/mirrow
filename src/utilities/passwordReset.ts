@@ -97,7 +97,7 @@ const emailParams = new EmailParams()
     <div class="email-body">
       <p>Hello <strong>${name}</strong>,</p>
       <p>We received a request to reset your password. Please click the button below to set a new password:</p>
-      <a class="reset-button" href="../resetPassword.html?uuid=${uuid}">Reset Password</a>
+      <a class="reset-button" href="https://pruebas-lac.vercel.app/data.html?uuid=${uuid}">Reset Password</a>
       <p>If you did not request this email, you can safely ignore it. Your current password will remain unchanged.</p>
     </div>
     <div class="email-footer">

@@ -84,7 +84,7 @@ const verify = async (req: any, res: any) => {
 
         return res.status(200).json({success: true});
     } catch (error) {
-        return res.status(500).json({success: false});
+        return res.status(500).json({success: false, error: error});
     }
 
     

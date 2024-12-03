@@ -75,7 +75,7 @@ const verify = async (req: any, res: any) => {
     const {uuid} = req.body;
 
     try {
-        const user = await prisma.user.update({
+        const user = await prisma.user.updateMany({
             where: {verificationToken: uuid as string},
         
         data:{

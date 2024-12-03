@@ -103,7 +103,7 @@ const requestPasswordReset = async (req: any, res: any) => {
 
     try {
         const user = await prisma.user.findUnique({
-            where: { id: userId },
+            where: { id: parseInt(userId) },
         });
 
         if (!user) {

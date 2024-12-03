@@ -10,7 +10,7 @@ datasource db {
 }
 
 model user {
-  id           Int           @id @default(autoincrement())
+  id           Int           @id @default(autoincrement()) @unique
   name         String
   surname      String
   email        String        @unique
@@ -27,7 +27,7 @@ model user {
 }
 
 model clothes {
-  id                 Int                  @id @default(autoincrement())
+  id                 Int                  @id @default(autoincrement()) @unique
   name               String
   price              Float
   description        String
@@ -45,14 +45,14 @@ model clothes {
 }
 
 model type {
-  id      Int       @id @default(autoincrement())
+  id      Int       @id @default(autoincrement()) @unique
   name    String
   clothes clothes[]
   subType subType[]
 }
 
 model subType {
-  id      Int       @id @default(autoincrement())
+  id      Int       @id @default(autoincrement()) @unique
   name    String
   typeId  Int
   clothes clothes[]
@@ -60,7 +60,7 @@ model subType {
 }
 
 model transaction {
-  id                 Int                  @id @default(autoincrement())
+  id                 Int                  @id @default(autoincrement()) @unique
   token              String               @unique
   userId             Int
   clothesId          Int
@@ -73,7 +73,7 @@ model transaction {
 }
 
 model card {
-  id             Int      @id @default(autoincrement())
+  id             Int      @id @default(autoincrement()) @unique
   userId         Int
   cardNumber     String
   expirationDate String
@@ -83,7 +83,7 @@ model card {
 }
 
 model clothesTransaction {
-  id            Int         @id @default(autoincrement())
+  id            Int         @id @default(autoincrement()) @unique
   clothesId     Int
   transactionId Int
   quantity      Int

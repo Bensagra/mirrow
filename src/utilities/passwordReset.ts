@@ -21,7 +21,6 @@ const recipients = [
 const emailParams = new EmailParams()
   .setFrom(sentFrom)
   .setTo(recipients)
-  .setReplyTo(sentFrom)
   .setSubject("This is a Subject")
   .setHtml(`
     <!DOCTYPE html>

@@ -23,7 +23,7 @@ model user {
   transactions transaction[]
   cart         clothes[]     @relation("clothesTouser")
   verificationToken String @unique @default(uuid())
-  verified Boolean @default(false) @unique
+  verified Boolean @default(false) 
 }
 
 model clothes {

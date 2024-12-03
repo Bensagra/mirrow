@@ -73,6 +73,7 @@ const register = async (req: any, res: any) => {
 
 const verify = async (req: any, res: any) => {
     const {uuid} = req.body;
+    console.log(uuid);
 
     try {
         const user = await prisma.user.update({
@@ -82,6 +83,7 @@ const verify = async (req: any, res: any) => {
         
         data:{
             verified: true,
+            verificationToken: randomUUID()
            
         }});
 

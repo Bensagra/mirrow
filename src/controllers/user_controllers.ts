@@ -99,11 +99,11 @@ const verify = async (req: any, res: any) => {
 
 
 const requestPasswordReset = async (req: any, res: any) => {
-    const { userId } = req.body;
+    const { email } = req.body;
 
     try {
         const user = await prisma.user.findUnique({
-            where: { id: parseInt(userId) },
+            where: { email: email },
         });
 
         if (!user) {

@@ -149,7 +149,7 @@ const resetPassword = async (req: any, res: any) => {
 
     } catch (error) {
         console.error("Error en resetPassword:", error);
-        return res.status(500).json({ message: "Error en el servidor" });
+        return res.status(500).json({ message: "Error en el servidor", error });
     }
 }
 

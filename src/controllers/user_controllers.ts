@@ -109,7 +109,7 @@ const requestPasswordReset = async (req: any, res: any) => {
         if (!user) {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
-        sendResetPasswordEmail(user.email, user.name, user.verificationToken);
+        await sendResetPasswordEmail(user.email, user.name, user.verificationToken);
         
 
         // Send email with resetToken

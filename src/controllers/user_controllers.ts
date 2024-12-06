@@ -7,11 +7,11 @@ import { sendResetPasswordEmail } from "../utilities/passwordReset";
 
 const login = async (req: any, res: any) => {
     const { email, password } = req.body;
-
     try {
         const user = await prisma.user.findUnique({
             where: { email },
         });
+        console.log(user);
 
         if (!user || jwtControllers.decryptPassword(user.password) !== password) {
             return res.status(401).json({ message: "Usuario o contraseña incorrecta" });

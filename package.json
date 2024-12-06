@@ -4,20 +4,29 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "babel-node": "babel-node --presets=@babel/preset-env",
     "dev": "nodemon --watch src --ext ts --exec ts-node src/index.ts",
     "postinstall": "prisma generate",
-    "test": "npx jest"
+    "test": " jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.10.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "jest-mock-extended": "^4.0.0-beta1",
     "prisma": "^5.22.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"

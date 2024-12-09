@@ -1,38 +1,45 @@
-import { userControllers } from "../user_controllers";
-import { prismaMock } from "../../singelton";
-import { jest } from "@jest/globals";
-import * as jwtControllers from "../../utilities/jwt";
+import { getMockReq, getMockRes } from '@jest-mock/express';
+import { userControllers } from '../user_controllers';
+import { prismaMock } from '../../singelton';
+import * as jwtControllers from '../../utilities/jwt';
 
+jest.mock('../../utilities/emailVerification');
+jest.mock('../../utilities/passwordReset');
+test("should mock Prisma client", () => {
+  expect(prismaMock.user.findUnique).toBeDefined();
+});
+describe('userControllers.login', () => {
+  it('debería autenticar a un usuario correctamente', async () => {
+    // Crear request y response mockeados
+    const req = getMockReq({
+      body: { email: 'test@example.com', password: 'password123' },
+    });
 
-jest.mock("../../utilities/emailVerification");
-jest.mock("../../utilities/passwordReset");
+    const { res, clearMockRes } = getMockRes();
+    clearMockRes(); // Limpia los mocks si se reutiliza res
 
-describe("userControllers.login", () => {
-  it("debería autenticar a un usuario correctamente", async () => {
-    const req = { body: { email: "test@example.com", password: "password123" } };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
+    // Configurar el mock de Prisma
     prismaMock.user.findUnique.mockResolvedValue({
       id: 1,
-      name: "Test",
-      surname: "User",
-      email: "test@example.com",
-      password: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkMTIzIiwiaWF0IjoxNzMzNDU0ODQ1fQ.ag6cwibi1yaECmqA-KVbn-TzhSsnz82__LRtLvLoSFw",
-      address: "123 Test St",
-      phone: "123-456-7890",
+      name: 'Test',
+      surname: 'User',
+      email: 'test@example.com',
+      password: 'hashedPassword123',
+      address: '123 Test St',
+      phone: '123-456-7890',
       createdAt: new Date(),
       role: 'user',
       verificationToken: 'token123',
       verified: true,
     });
 
-    jest.spyOn(jwtControllers, "decryptPassword").mockReturnValue("password123");
+    // Mockear la desencriptación de contraseña
+    jest.spyOn(jwtControllers, 'decryptPassword').mockReturnValue('password123');
 
+    // Llamar al controlador
     await userControllers.login(req, res);
 
+    // Aserciones
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({ message: 'Usuario logueado' });
   });

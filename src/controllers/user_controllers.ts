@@ -14,7 +14,7 @@ const login = async (req: any, res: any) => {
         console.log(user);
 
         if (!user || jwtControllers.decryptPassword(user.password) !== password) {
-            return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
+            return res.status(402).json({ message: "Usuario o contraseña incorrecta" });
         }
         if (!user.verified) {
             return res.status(401).json({ message: "Usuario no verificado" });}

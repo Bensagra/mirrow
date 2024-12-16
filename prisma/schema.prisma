@@ -21,27 +21,42 @@ model user {
   role         String        @default("user")
   cards        card[]
   transactions transaction[]
-  cart         clothes[]     @relation("clothesTouser")
   verificationToken String @unique @default(uuid())
   verified Boolean @default(false) 
 }
 
 model clothes {
-  id                 Int                  @id @default(autoincrement()) @unique
+  id                 Int                  @id @default(autoincrement())
   name               String
   price              Float
   description        String
   image              String
-  stock              Int
-  size               String
   typeId             Int
   subTypeId          Int
   fabric             String
+  color              String
   subType            subType              @relation(fields: [subTypeId], references: [id])
   type               type                 @relation(fields: [typeId], references: [id])
   clothesTransaction clothesTransaction[]
   transaction        transaction[]
-  user               user[]               @relation("clothesTouser")
+  sizeStocks         clothesSizeStock[]   
+}
+
+model size {
+  id                 Int                  @id @default(autoincrement())
+  name               String               @unique 
+  sizeStocks         clothesSizeStock[]   
+}
+
+model clothesSizeStock {
+  id         Int      @id @default(autoincrement())
+  clothesId  Int
+  sizeId     Int
+  stock      Int      @default(0)        
+  clothes    clothes  @relation(fields: [clothesId], references: [id], onDelete: Cascade)
+  size       size     @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+
+  @@unique([clothesId, sizeId])         
 }
 
 model type {

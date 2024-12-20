@@ -24,7 +24,7 @@ describe('userControllers.login', () => {
       name: 'Test',
       surname: 'User',
       email: 'test@example.com',
-      password: 'hashedPassword123',
+      password: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6Imhhc2hlZFBhc3N3b3JkMTIzIiwiaWF0IjoxNzM0NzI3MTE0fQ.Zg5JsbgkBowUuk01q3wgqQGQDUXfz2oVfnepAEYSos4',
       address: '123 Test St',
       phone: '123-456-7890',
       createdAt: new Date(),
@@ -34,10 +34,9 @@ describe('userControllers.login', () => {
     });
 
     // Mockear la desencriptación de contraseña
-    jest.spyOn(jwtControllers, 'decryptPassword').mockReturnValue('password123');
 
     // Llamar al controlador
-    await userControllers.login(req, res);
+    await userControllers.login(req, res, prismaMock);
 
     // Aserciones
     expect(res.status).toHaveBeenCalledWith(200);

@@ -1,6 +1,7 @@
-import prisma from "../client";
+import { PrismaClient } from "@prisma/client";
 
-const getClothes = async (req: any, res: any) => {
+
+const getClothes = async (req: any, res: any, prisma: PrismaClient) => {
     try {
         const products = await prisma.clothes.findMany({
            

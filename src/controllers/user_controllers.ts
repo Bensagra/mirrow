@@ -11,7 +11,7 @@ const login = async (req: any, res: any, prisma: PrismaClient ) => {
         const user = await prisma.user.findUnique({
             where: { email },
         });
-        console.log(user);
+        console.log(jwtControllers.decryptPassword(user!.password), password);
 
         if (!user || jwtControllers.decryptPassword(user.password) !== password) {
             return res.status(402).json({ message: "Usuario o contraseña incorrecta" });

@@ -12,7 +12,7 @@ describe('userControllers.login', () => {
   it('debería autenticar a un usuario correctamente', async () => {
     // Crear request y response mockeados
     const req = getMockReq({
-      body: { email: 'test@example.com', password: 'password123' },
+      body: { email: 'test@example.com', password: 'hashedPassword123' },
     });
 
     const { res, clearMockRes } = getMockRes();

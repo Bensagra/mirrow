@@ -1,7 +1,6 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { userControllers } from '../user_controllers';
 import { prismaMock } from '../../singelton';
-import * as jwtControllers from '../../utilities/jwt';
 
 jest.mock('../../utilities/emailVerification');
 jest.mock('../../utilities/passwordReset');

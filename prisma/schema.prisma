@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  
 }
 
 datasource db {
@@ -10,19 +9,19 @@ datasource db {
 }
 
 model user {
-  id           Int           @id @default(autoincrement()) @unique
-  name         String
-  surname      String
-  email        String        @unique
-  password     String
-  address      String
-  phone        String
-  createdAt    DateTime      @default(now())
-  role         String        @default("user")
-  cards        card[]
-  transactions transaction[]
-  verificationToken String @unique @default(uuid())
-  verified Boolean @default(false) 
+  id                Int           @id @unique @default(autoincrement())
+  name              String
+  surname           String
+  email             String        @unique
+  password          String
+  address           String
+  phone             String
+  createdAt         DateTime      @default(now())
+  role              String        @default("user")
+  cards             card[]
+  transactions      transaction[]
+  verificationToken String        @unique @default(uuid())
+  verified          Boolean       @default(false)
 }
 
 model clothes {
@@ -39,35 +38,35 @@ model clothes {
   type               type                 @relation(fields: [typeId], references: [id])
   clothesTransaction clothesTransaction[]
   transaction        transaction[]
-  sizeStocks         clothesSizeStock[]   
+  sizeStocks         clothesSizeStock[]
 }
 
 model size {
-  id                 Int                  @id @default(autoincrement())
-  name               String               @unique 
-  sizeStocks         clothesSizeStock[]   
+  id         Int                @id @default(autoincrement())
+  name       String             @unique
+  sizeStocks clothesSizeStock[]
 }
 
 model clothesSizeStock {
-  id         Int      @id @default(autoincrement())
-  clothesId  Int
-  sizeId     Int
-  stock      Int      @default(0)        
-  clothes    clothes  @relation(fields: [clothesId], references: [id], onDelete: Cascade)
-  size       size     @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+  id        Int     @id @default(autoincrement())
+  clothesId Int
+  sizeId    Int
+  stock     Int     @default(0)
+  clothes   clothes @relation(fields: [clothesId], references: [id], onDelete: Cascade)
+  size      size    @relation(fields: [sizeId], references: [id], onDelete: Cascade)
 
-  @@unique([clothesId, sizeId])         
+  @@unique([clothesId, sizeId])
 }
 
 model type {
-  id      Int       @id @default(autoincrement()) @unique
+  id      Int       @id @unique @default(autoincrement())
   name    String
   clothes clothes[]
   subType subType[]
 }
 
 model subType {
-  id      Int       @id @default(autoincrement()) @unique
+  id      Int       @id @unique @default(autoincrement())
   name    String
   typeId  Int
   clothes clothes[]
@@ -75,7 +74,7 @@ model subType {
 }
 
 model transaction {
-  id                 Int                  @id @default(autoincrement()) @unique
+  id                 Int                  @id @unique @default(autoincrement())
   token              String               @unique
   userId             Int
   clothesId          Int
@@ -88,7 +87,7 @@ model transaction {
 }
 
 model card {
-  id             Int      @id @default(autoincrement()) @unique
+  id             Int      @id @unique @default(autoincrement())
   userId         Int
   cardNumber     String
   expirationDate String
@@ -98,7 +97,7 @@ model card {
 }
 
 model clothesTransaction {
-  id            Int         @id @default(autoincrement()) @unique
+  id            Int         @id @unique @default(autoincrement())
   clothesId     Int
   transactionId Int
   quantity      Int

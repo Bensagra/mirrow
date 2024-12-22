@@ -17,4 +17,5 @@ router.put("/users/resetPassword",(req,res)=>userControllers.resetPassword(req,r
 
 
 router.get("/clothes",(req,res)=>clothesControllers.getClothes(req,res, prisma));
+router.put("/clothes/updateStock",(req,res)=>clothesControllers.updateStock(req,res, prisma));
 export default router;

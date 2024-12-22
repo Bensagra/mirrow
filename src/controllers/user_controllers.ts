@@ -23,14 +23,14 @@ const login = async (req: any, res: any, prisma: PrismaClient ) => {
 
     } catch (error) {
         console.error("Error en login:", error);
-        return res.status(500).json({ message: "Error en el servidor" });
+        return res.status(500).json({ message: "Error en el servidor", data: error, valid:false });
     }
 }
 
 const register = async (req: any, res: any, prisma: PrismaClient ) => {
     const { email, password, address, name, phone, role, surname } = req.body;
     if (!validator.validate(email)) {
-        return res.status(400).json({ message: "Email inválido" });
+        return res.status(400).json({ message: "Email invalido", data: {}, valid:false });
         
     }
     try {
@@ -39,7 +39,7 @@ const register = async (req: any, res: any, prisma: PrismaClient ) => {
         });
 
         if (existingUser) {
-            return res.status(409).json({ message: "El usuario ya existe" });
+            return res.status(409).json({ message: "El usuario ya existe", data: {}, valid:false });
         }
 
         const encryptedPassword = jwtControllers.encryptPassword(password);
@@ -58,15 +58,15 @@ const register = async (req: any, res: any, prisma: PrismaClient ) => {
       let data = await sendVerificationEmail(email, (name+" "+surname), newUser.verificationToken);
       console.log(data);
       if (!data) {
-        return res.status(500).json({ message: data });
+        return res.status(500).json({ message: "No hay data", data: data, valid:false });
         
       }
 
-        return res.status(201).json({ message: "Usuario creado", user: newUser.id });
+        return res.status(201).json({ message: "Usuario creado", user: newUser.id, valid:true });
 
     } catch (error) {
         console.error("Error en register:", error);
-        return res.status(500).json({ message: "Error en el servidor" });
+        return res.status(500).json({ message: "Error en el servidor", data: error, valid:false });
     }
 }
 

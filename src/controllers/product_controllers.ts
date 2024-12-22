@@ -73,5 +73,5 @@ const updateStock = async (req: any, res: any, prisma: PrismaClient) => {
 
 export const clothesControllers = {
    getClothes,
-    updateStock
+    updateStock,
 }

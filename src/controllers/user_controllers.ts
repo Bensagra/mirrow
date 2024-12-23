@@ -4,8 +4,9 @@ import { sendVerificationEmail } from "../utilities/emailVerification";
 import { randomUUID } from "crypto";
 import { sendResetPasswordEmail } from "../utilities/passwordReset";
 import { PrismaClient } from "@prisma/client";
+import { Request, Response } from "express";
 
-const login = async (req: any, res: any, prisma: PrismaClient ) => {
+const login = async (req: Request, res: Response, prisma: PrismaClient) => {
     const { email, password } = req.body;
     try {
         const user = await prisma.user.findUnique({
@@ -27,7 +28,7 @@ const login = async (req: any, res: any, prisma: PrismaClient ) => {
     }
 }
 
-const register = async (req: any, res: any, prisma: PrismaClient ) => {
+const register = async (req: Request, res: Response, prisma: PrismaClient) => {
     const { email, password, address, name, phone, role, surname } = req.body;
     if (!validator.validate(email)) {
         return res.status(400).json({ message: "Email invalido", data: {}, valid:false });
@@ -71,7 +72,7 @@ const register = async (req: any, res: any, prisma: PrismaClient ) => {
 }
 
 
-const verify = async (req: any, res: any, prisma: PrismaClient ) => {
+const verify = async (req: Request, res: Response, prisma: PrismaClient) => {
     const {uuid} = req.body;
     console.log(uuid);
 
@@ -98,7 +99,7 @@ const verify = async (req: any, res: any, prisma: PrismaClient ) => {
 
 
 
-const requestPasswordReset = async (req: any, res: any, prisma: PrismaClient ) => {
+const requestPasswordReset = async (req: Request, res: Response, prisma: PrismaClient) => {
     const { email } = req.body;
 
     try {
@@ -123,7 +124,7 @@ const requestPasswordReset = async (req: any, res: any, prisma: PrismaClient ) =
 }
 
 
-const resetPassword = async (req: any, res: any, prisma: PrismaClient ) => {
+const resetPassword = async (req: Request, res: Response, prisma: PrismaClient) => {
     const { resetToken, password } = req.body;
 
     try {

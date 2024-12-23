@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import { Request, Response } from 'express';
 
-const getClothes = async (req: any, res: any, prisma: PrismaClient) => {
+
+const getClothes = async (req: Request, res: Response, prisma: PrismaClient) => {
     console.log( req)
     try {
         const products = await prisma.clothes.findMany({
@@ -50,7 +52,7 @@ const getClothes = async (req: any, res: any, prisma: PrismaClient) => {
 
 }
 
-const updateStock = async (req: any, res: any, prisma: PrismaClient) => {
+const updateStock = async (req: Request, res: Response, prisma: PrismaClient) => {
     const { sizeId, stock, clotheId } = req.body;
     try {
         const product = await prisma.clothesSizeStock.update({

@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
 
-const getClothes = async (req: Request, res: Response, prisma: PrismaClient) => {
-    console.log( req)
+const getClothes = async (req: any, res: any, prisma: PrismaClient)  => {
+    
     try {
         const products = await prisma.clothes.findMany({
            
@@ -52,7 +52,7 @@ const getClothes = async (req: Request, res: Response, prisma: PrismaClient) => 
 
 }
 
-const updateStock = async (req: Request, res: Response, prisma: PrismaClient) => {
+const updateStock = async (req: any, res: any, prisma: PrismaClient) => {
     const { sizeId, stock, clotheId } = req.body;
     try {
         const product = await prisma.clothesSizeStock.update({
@@ -73,7 +73,31 @@ const updateStock = async (req: Request, res: Response, prisma: PrismaClient) =>
     }
 }
 
-export const clothesControllers = {
+const createClothes = async (req: any, res: any, prisma: PrismaClient) => {
+    const { name, price, description, image, subTypeId, fabric, color, typeId } = req.body;
+    try {
+        const product = await prisma.clothes.create({
+            data: {
+               color,
+               description,
+               fabric,
+               image,
+               name,
+               price,
+               typeId,
+               subTypeId,
+               
+            }
+        });
+        return res.status(201).json({ message: "Producto creado", data: product, valid:true });
+    } catch (error) {
+        console.error("Error en createProduct:", error);
+        return res.status(500).json({ message: "Error en el servidor", data: error, valid:false });
+    }
+}
+
+export const clothesControllers =  {
    getClothes,
     updateStock,
+    createClothes
 }

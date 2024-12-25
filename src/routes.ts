@@ -1,7 +1,7 @@
-import { Router, Request, Response } from "express";
-import { userControllers } from "./controllers/user_controllers";
-import { clothesControllers } from "./controllers/product_controllers";
+import { Request, Response, Router } from "express";
 import prisma from "../src/client";
+import { clothesControllers } from "./controllers/product_controllers";
+import { userControllers } from "./controllers/user_controllers";
 
 const router = Router();
 
@@ -21,6 +21,11 @@ router.post("/users/requestPasswordReset", (req: Request, res: Response) =>
 router.put("/users/resetPassword", (req: Request, res: Response) =>
     userControllers.resetPassword(req, res, prisma)
 );
+router.post("/users/card", (req: Request, res: Response) =>
+    userControllers.createCard(req, res, prisma))
+
+router.post("/users/address", (req: Request, res: Response) =>
+    userControllers.createAddress(req, res, prisma))
 
 // Rutas para ropa
 router.get("/clothes", (req: Request, res: Response) =>
@@ -29,8 +34,15 @@ router.get("/clothes", (req: Request, res: Response) =>
 router.put("/clothes/updateStock", (req: Request, res: Response) =>
     clothesControllers.updateStock(req, res, prisma)
 );
-router.post("/clothes/create", (req: Request, res: Response) =>
+router.post("/clothes", (req: Request, res: Response) =>
     clothesControllers.createClothes(req, res, prisma)
 );
+router.put("/clothes", (req: Request, res: Response) =>
+    clothesControllers.updateClothes(req, res, prisma)
+);
+router.delete("/clothes", (req: Request, res: Response) =>
+    clothesControllers.removeClothes(req, res, prisma)
+);
+
 
 export default router;

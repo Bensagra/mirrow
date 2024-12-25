@@ -1,10 +1,9 @@
-import { jwtControllers } from "../utilities/export_routes";
+import { PrismaClient } from "@prisma/client";
+import { randomUUID } from "crypto";
 import * as validator from 'email-validator';
 import { sendVerificationEmail } from "../utilities/emailVerification";
-import { randomUUID } from "crypto";
+import { jwtControllers } from "../utilities/export_routes";
 import { sendResetPasswordEmail } from "../utilities/passwordReset";
-import { PrismaClient } from "@prisma/client";
-import { Request, Response } from "express";
 
 const login = async (req: any, res: any, prisma: PrismaClient) => {
     const { email, password } = req.body;
@@ -155,6 +154,58 @@ const resetPassword = async (req: any, res: any, prisma: PrismaClient) => {
 }
 
 
+const createAddress = async (req: any, res: any, prisma: PrismaClient) => {
+    const { address, userId, city,state,zip } = req.body;
+
+    try {
+         await prisma.address.create({
+            data:{
+                address,
+                city,
+                state,
+                zip,
+                userId:parseInt(userId)
+            }
+        })
+        let data = await prisma.address.findMany({
+            where:{
+                userId: parseInt(userId)
+            }
+        })
+
+        return res.status(200).json({ message: "Direccion guardada correctamente", data: data, valid:true });
+
+    } catch (error) {
+        console.error("Error en createAddress:", error);
+        return res.status(500).json({ message: "Error en el servidor", error });
+    }
+}
+
+
+const createCard = async (req: any, res: any, prisma: PrismaClient) => {
+    const {cardNumber,cvv,expirationDate,userId} = req.body
+    try {
+        await prisma.card.create({
+            data:{
+                cardNumber,
+                cvv,
+                expirationDate,
+                userId:parseInt(userId)
+            }
+        })
+        let data = await prisma.card.findMany({
+            where:{
+                userId: parseInt(userId)
+            }
+        })
+    return res.status(200).json({ message: "Direccion guardada correctamente", data: data, valid:true })    
+    } catch (error) {
+        return res.status(500).json({valid:false,message:"Error del servidor"})
+    }
+}
+
+
+
 
 
 export const userControllers = {
@@ -163,4 +214,6 @@ export const userControllers = {
     verify,
     requestPasswordReset,
     resetPassword,
+    createAddress,
+    createCard
 }

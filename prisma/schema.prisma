@@ -14,7 +14,7 @@ model user {
   surname           String
   email             String        @unique
   password          String
-  address           String
+  address           address[]
   phone             String
   createdAt         DateTime      @default(now())
   role              String        @default("user")
@@ -22,6 +22,16 @@ model user {
   transactions      transaction[]
   verificationToken String        @unique @default(uuid())
   verified          Boolean       @default(false)
+}
+
+model address {
+  id      Int    @id @unique @default(autoincrement())
+  userId  Int
+  address String
+  city    String
+  state   String
+  zip     String
+  user    user   @relation(fields: [userId], references: [id])
 }
 
 model clothes {
@@ -39,6 +49,7 @@ model clothes {
   clothesTransaction clothesTransaction[]
   transaction        transaction[]
   sizeStocks         clothesSizeStock[]
+  remove             Boolean              @default(false)
 }
 
 model size {

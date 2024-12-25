@@ -1,12 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { Request, Response } from "express";
 
 
 const getClothes = async (req: any, res: any, prisma: PrismaClient)  => {
     
     try {
         const products = await prisma.clothes.findMany({
-           
+           where:{
+            remove:false
+           },
     include: {
         subType:{
 
@@ -96,8 +97,47 @@ const createClothes = async (req: any, res: any, prisma: PrismaClient) => {
     }
 }
 
+const updateClothes = async (req: any, res: any, prisma: PrismaClient) => {
+    const { name, price, description, image, subTypeId, fabric, color, typeId, clotheId } = req.body;
+    try {
+        const product = await prisma.clothes.update({
+            where: {
+                id: parseInt(clotheId)
+            },
+            data: {
+                color,
+                description,
+                fabric,
+                image,
+                name,
+                price,
+                typeId,
+                subTypeId,
+            }
+        });
+        return res.status(200).json({ message: "Producto actualizado", data: product, valid:true });
+    } catch (error) {
+        console.error("Error en updateProduct:", error);
+        return res.status(500).json({ message: "Error en el servidor", data: error, valid:false });
+    }
+}
+
+const removeClothes = async (req:any,res:any,prisma:PrismaClient) => {
+    const {clothesId} = req.body
+    await prisma.clothes.update({
+        where:{
+            id: parseInt(clothesId)
+        },
+        data:{
+            remove: true
+        }
+    })
+}
+
 export const clothesControllers =  {
    getClothes,
     updateStock,
-    createClothes
+    createClothes,
+    updateClothes,
+    removeClothes
 }
